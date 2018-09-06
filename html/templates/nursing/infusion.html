@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#" v-on:tap="gotoUrl('Back')"></a>
+        <h1 class="mui-title">输液执行</h1>
+    </header>
+
+    <div class="mui-content">
+        <div class="mui-card">
+            <ul class="mui-table-view" id="infusions">
+                <li class="mui-table-view-cell mui-collapse" v-for="infusion in data.data">
+                    <a class="mui-navigate-right" href="#" id="infusion_id">输液号：{{infusion.infusion_id}}</a>
+                    <div class="mui-collapse-content">
+                        <form class="mui-input-group">
+                            <div class="mui-input-row">
+                                <label>病人ID：</label>
+                                <label id="patient_id">{{infusion.patient_id}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>病人姓名：</label>
+                                <label>{{infusion.name}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>病房号：</label>
+                                <label>{{infusion.ward_no}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>床位号：</label>
+                                <label>{{infusion.bed_no}}</label>
+                            </div>
+                            <div class="mui-input-row" style="height: auto">
+                                <label>配方：</label>
+                                <label>{{infusion.formula}}</label>
+                            </div>
+                            <div class="mui-input-row" style="height: auto">
+                                <label>输液时间：</label>
+                                <label>{{infusion.time}}</label>
+                            </div>
+
+                            <div class="mui-input-row" style="height: auto">
+                                <label>备注：</label>
+                                <label>{{infusion.remark}}</label>
+                            </div>
+                            <div class="mui-button-row">
+                                <button class="mui-btn mui-btn-primary" type="button" v-on:click="check()">确认执行
+                                </button>&nbsp;&nbsp;
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        created: function () {
+            this.pullData();
+        },
+        methods: {
+            pullData: function () {
+                var _self = this;
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    url: getUrl() + "/infusion",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        _self.data = data;
+                    }
+                });
+            },
+            gotoUrl: function (next) {
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    url: getUrl() + "/infusion" + next,
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            check: function () {
+                var d = {}
+                d.id = $("#infusion_id")[0].text.substring(4);
+                d.pid = $("#patient_id").html();
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(d),
+                    url: getUrl() + "/workInfusionCheck",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data==200)
+                            mui.alert('医嘱已执行', '提示');
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

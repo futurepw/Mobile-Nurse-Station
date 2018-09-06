@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": {
+      "nurse_id": "护士",
+      "name": "姓名",
+      "birthday": "生日",
+      "sex": "性别",
+      "department": "科室",
+      "entry_time": "入职日期"
+    }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+
+
+    <script src="../static/mui/js/mui.min.js"></script>
+    <link href="../static/mui/css/mui.min.css" rel="stylesheet"/>
+    <script src="../static/tool/jquery-3.3.1.js"></script>
+    <script src="../static/vue/vue.js"></script>
+    <script src="../static/tool/tool.js"></script>
+    <title></title>
+    <script src="../static/tool/jquery.min.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#" v-on:click="back()"></a>
+        <h1 class="mui-title">选择项目</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell" v-on:click="gotoUrl('Order')">
+                <a class="mui-navigate-right" href="#">
+                    医嘱执行
+                </a>
+            </li>
+            <li class="mui-table-view-cell" v-on:click="gotoUrl('Infusion')">
+                <a class="mui-navigate-right" href="#">
+                    输液执行
+                </a>
+            </li>
+            <li class="mui-table-view-cell" v-on:click="gotoUrl('Test')">
+                <a class="mui-navigate-right" href="#">
+                    检验采集
+                </a>
+            </li>
+            <li class="mui-table-view-cell" v-on:click="gotoUrl('TestResult')">
+                <a class="mui-navigate-right" href="#">
+                    检验结果
+                </a>
+            </li>
+            <li class="mui-table-view-cell" v-on:click="gotoUrl('Care')">
+                <a class="mui-navigate-right" href="#">
+                    护理执行
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+</body>
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        methods: {
+            gotoUrl: function (next) {
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    url: getUrl() + "/subNursing" + next,
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            back: function () {
+                $.ajax({
+                    type: "GET",
+                    data:{
+                        nid:getQueryString("nid")
+                    },
+                    url: getUrl() + "/subNursingBack",
+                    contentType: "application/json;charset=utf-8",
+                    dataType:"json",
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+
+                });
+            }
+        }
+    });
+</script>
+</html>

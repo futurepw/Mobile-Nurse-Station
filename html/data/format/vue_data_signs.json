@@ -1,0 +1,15 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": {
+      "patient_id": "病人id",
+      "temperature": "体温",
+      "breathe": "呼吸量",
+      "blood_pressureH": "血压高压",
+      "blood_pressureL": "血压低压",
+      "pluse": "脉搏",
+      "height": "身高",
+      "weight": "体重",
+      "in_out": "出入量"
+    }
+}

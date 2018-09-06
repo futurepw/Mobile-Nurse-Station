@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.OrdersMapper">
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Orders">
+        <id column="order_sn" jdbcType="VARCHAR" property="orderSn"/>
+        <result column="ward_no" jdbcType="VARCHAR" property="wardNo"/>
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="department_id" jdbcType="VARCHAR" property="departmentId"/>
+        <result column="bed_no" jdbcType="VARCHAR" property="bedNo"/>
+        <result column="order_code" jdbcType="VARCHAR" property="orderCode"/>
+        <result column="pack_sn" jdbcType="VARCHAR" property="packSn"/>
+        <result column="frequ_code" jdbcType="VARCHAR" property="frequCode"/>
+        <result column="supply_code" jdbcType="VARCHAR" property="supplyCode"/>
+        <result column="drug_specification" jdbcType="VARCHAR" property="drugSpecification"/>
+        <result column="dosage" jdbcType="DOUBLE" property="dosage"/>
+        <result column="dosage_unit" jdbcType="VARCHAR" property="dosageUnit"/>
+        <result column="persist_days" jdbcType="INTEGER" property="persistDays"/>
+        <result column="start_time" jdbcType="DATE" property="startTime"/>
+        <result column="end_time" jdbcType="DATE" property="endTime"/>
+        <result column="start_doctor_id" jdbcType="VARCHAR" property="startDoctorId"/>
+        <result column="end_doctor_id" jdbcType="VARCHAR" property="endDoctorId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    order_sn, ward_no, patient_id, department_id, bed_no, order_code, pack_sn, frequ_code, 
+    supply_code, drug_specification, dosage, dosage_unit, persist_days, start_time, end_time, 
+    start_doctor_id, end_doctor_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where order_sn = #{orderSn,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orders
+    where order_sn = #{orderSn,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Orders">
+    insert into orders (order_sn, ward_no, patient_id, 
+      department_id, bed_no, order_code, 
+      pack_sn, frequ_code, supply_code, 
+      drug_specification, dosage, dosage_unit, 
+      persist_days, start_time, end_time, 
+      start_doctor_id, end_doctor_id)
+    values (#{orderSn,jdbcType=VARCHAR}, #{wardNo,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=VARCHAR}, #{bedNo,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, 
+      #{packSn,jdbcType=VARCHAR}, #{frequCode,jdbcType=VARCHAR}, #{supplyCode,jdbcType=VARCHAR}, 
+      #{drugSpecification,jdbcType=VARCHAR}, #{dosage,jdbcType=DOUBLE}, #{dosageUnit,jdbcType=VARCHAR}, 
+      #{persistDays,jdbcType=INTEGER}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
+      #{startDoctorId,jdbcType=VARCHAR}, #{endDoctorId,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Orders">
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderSn != null">
+                order_sn,
+            </if>
+            <if test="wardNo != null">
+                ward_no,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="bedNo != null">
+                bed_no,
+            </if>
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="packSn != null">
+                pack_sn,
+            </if>
+            <if test="frequCode != null">
+                frequ_code,
+            </if>
+            <if test="supplyCode != null">
+                supply_code,
+            </if>
+            <if test="drugSpecification != null">
+                drug_specification,
+            </if>
+            <if test="dosage != null">
+                dosage,
+            </if>
+            <if test="dosageUnit != null">
+                dosage_unit,
+            </if>
+            <if test="persistDays != null">
+                persist_days,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="startDoctorId != null">
+                start_doctor_id,
+            </if>
+            <if test="endDoctorId != null">
+                end_doctor_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderSn != null">
+                #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="wardNo != null">
+                #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="bedNo != null">
+                #{bedNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderCode != null">
+                #{orderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="packSn != null">
+                #{packSn,jdbcType=VARCHAR},
+            </if>
+            <if test="frequCode != null">
+                #{frequCode,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyCode != null">
+                #{supplyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="drugSpecification != null">
+                #{drugSpecification,jdbcType=VARCHAR},
+            </if>
+            <if test="dosage != null">
+                #{dosage,jdbcType=DOUBLE},
+            </if>
+            <if test="dosageUnit != null">
+                #{dosageUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="persistDays != null">
+                #{persistDays,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=DATE},
+            </if>
+            <if test="startDoctorId != null">
+                #{startDoctorId,jdbcType=VARCHAR},
+            </if>
+            <if test="endDoctorId != null">
+                #{endDoctorId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Orders">
+        update orders
+        <set>
+            <if test="wardNo != null">
+                ward_no = #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="bedNo != null">
+                bed_no = #{bedNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderCode != null">
+                order_code = #{orderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="packSn != null">
+                pack_sn = #{packSn,jdbcType=VARCHAR},
+            </if>
+            <if test="frequCode != null">
+                frequ_code = #{frequCode,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyCode != null">
+                supply_code = #{supplyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="drugSpecification != null">
+                drug_specification = #{drugSpecification,jdbcType=VARCHAR},
+            </if>
+            <if test="dosage != null">
+                dosage = #{dosage,jdbcType=DOUBLE},
+            </if>
+            <if test="dosageUnit != null">
+                dosage_unit = #{dosageUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="persistDays != null">
+                persist_days = #{persistDays,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=DATE},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=DATE},
+            </if>
+            <if test="startDoctorId != null">
+                start_doctor_id = #{startDoctorId,jdbcType=VARCHAR},
+            </if>
+            <if test="endDoctorId != null">
+                end_doctor_id = #{endDoctorId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_sn = #{orderSn,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Orders">
+    update orders
+    set ward_no = #{wardNo,jdbcType=VARCHAR},
+      patient_id = #{patientId,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      bed_no = #{bedNo,jdbcType=VARCHAR},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      pack_sn = #{packSn,jdbcType=VARCHAR},
+      frequ_code = #{frequCode,jdbcType=VARCHAR},
+      supply_code = #{supplyCode,jdbcType=VARCHAR},
+      drug_specification = #{drugSpecification,jdbcType=VARCHAR},
+      dosage = #{dosage,jdbcType=DOUBLE},
+      dosage_unit = #{dosageUnit,jdbcType=VARCHAR},
+      persist_days = #{persistDays,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=DATE},
+      start_doctor_id = #{startDoctorId,jdbcType=VARCHAR},
+      end_doctor_id = #{endDoctorId,jdbcType=VARCHAR}
+    where order_sn = #{orderSn,jdbcType=VARCHAR}
+  </update>
+    <select id="selectAllByPid" parameterType="String" resultType="com.pei.test.server.entity.orderEntity">
+    SELECT
+      patient.`name`,
+      ward.ward_no,
+      ward.bed_no,
+      orders.order_sn,
+      orders.patient_id,
+      orders.order_code,
+      orders.frequ_code,
+      orders.supply_code,
+      orders.drug_specification,
+      orders.dosage,
+      orders.dosage_unit,
+      orders.start_time,
+      orders.end_time,
+      orders.pack_sn
+    FROM
+      patient ,
+      ward ,
+      orders
+    WHERE
+      orders.patient_id = patient.patient_id AND
+      orders.patient_id = ward.patient_id AND
+      orders.patient_id = #{Pid,jdbcType=VARCHAR}
+  </select>
+</mapper>

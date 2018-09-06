@@ -1,0 +1,9 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": {
+      "username": "用户名",
+      "oldpassword": "旧密码",
+      "newpassword": "新密码"
+    }
+}

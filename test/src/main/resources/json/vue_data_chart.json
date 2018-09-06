@@ -1,0 +1,13 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": {
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "breathe": [ 1, 2, 3, 4, 5, 6, 7 ],
+      "blood_pressureH": [ 1, 2, 3, 4, 5, 6, 7 ],
+      "blood_pressureL": [ 1, 2, 3, 4, 5, 6, 7 ],
+      "pluse": [ 1, 2, 3, 4, 5, 6, 7 ],
+      "date": [ 1, 2, 3, 4, 5, 6, 7 ]
+    }
+}

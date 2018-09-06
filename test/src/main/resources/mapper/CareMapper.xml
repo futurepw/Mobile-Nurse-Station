@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.CareMapper">
+    <resultMap id="care" type="com.pei.test.entity.Care"></resultMap>
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Care">
+        <id column="care_id" jdbcType="VARCHAR" property="careId"/>
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+        <result column="way" jdbcType="VARCHAR" property="way"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    care_id, patient_id, time, way, remark
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from care
+        where care_id = #{careId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from care
+    where care_id = #{careId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Care">
+    insert into care (care_id, patient_id, time, 
+      way, remark)
+    values (#{careId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
+      #{way,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Care">
+        insert into care
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="careId != null">
+                care_id,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="way != null">
+                way,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="careId != null">
+                #{careId,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=DATE},
+            </if>
+            <if test="way != null">
+                #{way,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Care">
+        update care
+        <set>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=DATE},
+            </if>
+            <if test="way != null">
+                way = #{way,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where care_id = #{careId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Care">
+    update care
+    set patient_id = #{patientId,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      way = #{way,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where care_id = #{careId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectAllByPid" parameterType="String" resultType="com.pei.test.server.entity.careEntity">
+      SELECT
+        care.care_id,
+        care.patient_id,
+        care.time,
+        care.way,
+        care.remark,
+        patient.`name`,
+        ward.bed_no,
+        ward.ward_no
+      FROM
+        patient ,
+        ward ,
+        care
+      WHERE
+        care.patient_id = patient.patient_id AND
+        care.patient_id = ward.patient_id AND
+        care.patient_id = #{Pid,jdbcType=VARCHAR}
+  </select>
+</mapper>

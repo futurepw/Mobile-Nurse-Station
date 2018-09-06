@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <link rel="stylesheet" href="../../static/mui/css/swiper-3.4.0.min.css">
+    <script src="../../static/mui/js/tools.js"></script>
+    <script src="../../static/mui/js/swiper-3.4.0.min.js"></script>
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" v-on:click="gotoUrl('Back')" href="#"></a>
+        <h1 class="mui-title">用户信息</h1>
+    </header>
+
+    <div class="mui-content">
+        <ul class="mui-table-view" id="userInfo">
+            <li class="mui-table-view-cell">
+                <a>姓名:<span class="mui-pull-right">{{data.data.name}}</span></a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a>账号:<span class="mui-pull-right">{{data.data.nurse_id}}</span></a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a>性别:<span class="mui-pull-right">{{data.data.sex}}</span></a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a>科室:<span class="mui-pull-right">{{data.data.department}}</span></a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a>生日:<span class="mui-pull-right">{{data.data.birthday}}</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        created: function () {
+            this.pullData();
+        },
+        methods: {
+            pullData: function () {
+                var _self = this;
+                $.ajax({
+                    type: 'GET',
+                    data:{
+                        username:getQueryString("nid")
+                    },
+                    url: getUrl() + "/userInfo",
+                    dataType: 'json',
+                    success: function (data) {
+                        _self.data = data;
+                    }
+                });
+            },
+            gotoUrl: function (next) {
+                $.ajax({
+                    type: 'GET',
+                    data:{
+                        nid:getQueryString("nid")
+                    },
+                    url: getUrl() + "/userInfo" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

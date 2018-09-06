@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  use-forward-headers: true
+
+
+spring:
+  #http配置
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/kcsj?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: kcsj
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    tomcat:
+      test-on-borrow: true
+      validation-query: 1
+#mybatis配置
+mybatis:
+  type-aliases-package: com.pei.test.entity
+  mapper-locations: mapper/*.xml
+
+
+
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.InfusionMapper">
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Infusion">
+        <id column="infusion_id" jdbcType="VARCHAR" property="infusionId"/>
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+        <result column="formula" jdbcType="VARCHAR" property="formula"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    infusion_id, patient_id, time, formula, remark
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from infusion
+        where infusion_id = #{infusionId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from infusion
+    where infusion_id = #{infusionId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Infusion">
+    insert into infusion (infusion_id, patient_id, time, 
+      formula, remark)
+    values (#{infusionId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
+      #{formula,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Infusion">
+        insert into infusion
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infusionId != null">
+                infusion_id,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="formula != null">
+                formula,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infusionId != null">
+                #{infusionId,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=DATE},
+            </if>
+            <if test="formula != null">
+                #{formula,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Infusion">
+        update infusion
+        <set>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=DATE},
+            </if>
+            <if test="formula != null">
+                formula = #{formula,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where infusion_id = #{infusionId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Infusion">
+    update infusion
+    set patient_id = #{patientId,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      formula = #{formula,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where infusion_id = #{infusionId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectAllByPid" parameterType="String" resultType="com.pei.test.server.entity.infusionEntity">
+   SELECT
+      infusion.infusion_id,
+      infusion.patient_id,
+      infusion.time,
+      infusion.formula,
+      infusion.remark,
+      ward.ward_no,
+      patient.`name`,
+      ward.bed_no
+    FROM
+      infusion ,
+      patient ,
+      ward
+    WHERE
+      infusion.patient_id = patient.patient_id AND
+      infusion.patient_id = ward.patient_id AND
+      infusion.patient_id = #{Pid,jdbcType=VARCHAR}
+  </select>
+</mapper>

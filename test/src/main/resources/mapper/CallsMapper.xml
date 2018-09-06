@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.CallsMapper">
+  <resultMap id="BaseResultMap" type="com.pei.test.entity.Calls">
+    <id column="call_id" jdbcType="VARCHAR" property="callId" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    call_id, patient_id, type, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from calls
+    where call_id = #{callId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from calls
+    where call_id = #{callId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pei.test.entity.Calls">
+    insert into calls (call_id, patient_id, type, 
+      remark)
+    values (#{callId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pei.test.entity.Calls">
+    insert into calls
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="callId != null">
+        call_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="callId != null">
+        #{callId,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Calls">
+    update calls
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where call_id = #{callId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Calls">
+    update calls
+    set patient_id = #{patientId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where call_id = #{callId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+      select  *   from calls
+  </select>
+</mapper>

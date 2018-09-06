@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.PatientMapper">
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Patient">
+        <id column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="social_code" jdbcType="VARCHAR" property="socialCode"/>
+        <result column="response_type" jdbcType="VARCHAR" property="responseType"/>
+        <result column="setup_date" jdbcType="DATE" property="setupDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    patient_id, name, birthday, sex, social_code, response_type, setup_date
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from patient
+        where patient_id = #{patientId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from patient
+    where patient_id = #{patientId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Patient">
+    insert into patient (patient_id, name, birthday, 
+      sex, social_code, response_type, 
+      setup_date)
+    values (#{patientId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{sex,jdbcType=VARCHAR}, #{socialCode,jdbcType=VARCHAR}, #{responseType,jdbcType=VARCHAR}, 
+      #{setupDate,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Patient">
+        insert into patient
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="socialCode != null">
+                social_code,
+            </if>
+            <if test="responseType != null">
+                response_type,
+            </if>
+            <if test="setupDate != null">
+                setup_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="socialCode != null">
+                #{socialCode,jdbcType=VARCHAR},
+            </if>
+            <if test="responseType != null">
+                #{responseType,jdbcType=VARCHAR},
+            </if>
+            <if test="setupDate != null">
+                #{setupDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Patient">
+        update patient
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="socialCode != null">
+                social_code = #{socialCode,jdbcType=VARCHAR},
+            </if>
+            <if test="responseType != null">
+                response_type = #{responseType,jdbcType=VARCHAR},
+            </if>
+            <if test="setupDate != null">
+                setup_date = #{setupDate,jdbcType=DATE},
+            </if>
+        </set>
+        where patient_id = #{patientId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Patient">
+    update patient
+    set name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=VARCHAR},
+      social_code = #{socialCode,jdbcType=VARCHAR},
+      response_type = #{responseType,jdbcType=VARCHAR},
+      setup_date = #{setupDate,jdbcType=DATE}
+    where patient_id = #{patientId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="getPatient" parameterType="String" resultType="com.pei.test.server.entity.patientEntity">
+    SELECT
+	ward.ward_no,
+	ward.bed_no,
+	patient.`name`,
+	docter.`name` AS docter,
+	ward.patient_id
+FROM
+	ward,
+	patient,
+	docter
+WHERE
+	ward.patient_id = patient.patient_id
+	AND ward.doctors_id = docter.doctor_id
+	AND ward.nurse_id = #{Nid,jdbcType=VARCHAR}
+  </select>
+</mapper>

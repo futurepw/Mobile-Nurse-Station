@@ -1,0 +1,26 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "infusion_id": "输液id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "time": "输液时间",
+      "formula": "配方",
+      "remark": "备注"
+    },
+    {
+      "infusion_id": "输液id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "time": "输液时间",
+      "formula": "配方",
+      "remark": "备注"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <link rel="stylesheet" href="../../static/mui/css/swiper-3.4.0.min.css">
+    <script src="../../static/mui/js/tools.js"></script>
+    <script src="../../static/mui/js/swiper-3.4.0.min.js"></script>
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#"  v-on:click="gotoUrl('Back')"></a>
+        <h1 class="mui-title">关于</h1>
+    </header>
+
+    <div class="mui-content">
+        <ul class="mui-table-view" >
+            <li class="mui-table-view-cell" >
+                <div style="text-align: center">
+                    <img src="../../data/icon/logo.ico" >
+                    <h5>V 1.0.0</h5>
+                </div>
+
+            </li>
+            <li class="mui-table-view-cell"  v-on:click="gotoUrl('Help')">
+                <a class="mui-navigate-right" href="#">
+                    帮助
+                </a>
+            </li>
+            <li class="mui-table-view-cell"  v-on:click="gotoUrl('Feedback')">
+                <a class="mui-navigate-right" href="#">
+                    反馈
+                </a>
+            </li>
+            <li class="mui-table-view-cell"  v-on:click="gotoUrl('Explain')">
+                <a class="mui-navigate-right" href="#">
+                    说明
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        methods: {
+            gotoUrl: function (next) {
+                $.ajax({
+                    type: 'GET',
+                    data:{
+                        nid:getQueryString("nid")
+                    },
+                    url: getUrl() + "/about" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

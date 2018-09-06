@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.NurseMapper">
+  <resultMap id="BaseResultMap" type="com.pei.test.entity.Nurse">
+    <id column="nurse_id" jdbcType="VARCHAR" property="nurseId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="entry_time" jdbcType="DATE" property="entryTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    nurse_id, name, birthday, sex, department_id, entry_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from nurse
+    where nurse_id = #{nurseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from nurse
+    where nurse_id = #{nurseId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pei.test.entity.Nurse">
+    insert into nurse (nurse_id, name, birthday, 
+      sex, department_id, entry_time
+      )
+    values (#{nurseId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{sex,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{entryTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pei.test.entity.Nurse">
+    insert into nurse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nurseId != null">
+        nurse_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="entryTime != null">
+        entry_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nurseId != null">
+        #{nurseId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null">
+        #{entryTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Nurse">
+    update nurse
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null">
+        entry_time = #{entryTime,jdbcType=DATE},
+      </if>
+    </set>
+    where nurse_id = #{nurseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Nurse">
+    update nurse
+    set name = #{name,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      entry_time = #{entryTime,jdbcType=DATE}
+    where nurse_id = #{nurseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

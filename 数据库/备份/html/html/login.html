@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="static/mui/js/app.js"></script>
+    <script src="static/mui/js/mui.enterfocus.js"></script>
+    <script src="static/mui/js/mui.min.js"></script>
+    <script src="./static/tool/jquery-3.3.1.js"></script>
+    <script src="./static/tool/jquery.serializejson.js"></script>
+    <link rel="stylesheet" href="static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="static/mui/css/style.css">
+
+    <title></title>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav white">
+    <a class="mui-icon mui-icon-left-nav" href="./index.html"></a>
+    <h1 class="mui-title">登录</h1>
+</header>
+
+<div class="mui-content">
+    <div style="text-align: center">
+        <img src="./data/icon/logo.ico" >
+    </div>
+    <form class="mui-input-group" id="formDemo">
+        <div class="mui-input-row">
+            <label>账号：</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入用户名" id="username" name="username">
+        </div>
+        <div class="mui-input-row">
+            <label>密码：</label>
+            <input type="password" class="mui-input-password" placeholder="请输入密码" id="password" name="password">
+        </div>
+        <div class="mui-button-row">
+            <button type="button" class="mui-btn mui-btn-primary" onclick="check()">确认</button>
+            <button type="button" class="mui-btn mui-btn-danger" onclick="cancel()">取消</button>
+        </div>
+    </form>
+</div>
+<script>
+    function check() {
+        console.log(JSON.stringify($('#formDemo').serializeJSON()));
+    }
+    function cancel() {
+        document.getElementById("username").value="";
+        document.getElementById("password").value="";
+    }
+</script>
+</body>
+</html>

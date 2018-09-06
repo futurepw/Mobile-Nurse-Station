@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.ReportresultMapper">
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Reportresult">
+        <id column="report_id" jdbcType="VARCHAR" property="reportId"/>
+        <id column="item_id" jdbcType="VARCHAR" property="itemId"/>
+        <id column="reference_id" jdbcType="VARCHAR" property="referenceId"/>
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    report_id, item_id, reference_id, patient_id, name, result, remark
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.pei.test.entity.ReportresultKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from reportresult
+        where report_id = #{reportId,jdbcType=VARCHAR}
+        and item_id = #{itemId,jdbcType=VARCHAR}
+        and reference_id = #{referenceId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.pei.test.entity.ReportresultKey">
+    delete from reportresult
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+      and reference_id = #{referenceId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Reportresult">
+    insert into reportresult (report_id, item_id, reference_id, 
+      patient_id, name, result, 
+      remark)
+    values (#{reportId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{referenceId,jdbcType=VARCHAR}, 
+      #{patientId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Reportresult">
+        insert into reportresult
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                report_id,
+            </if>
+            <if test="itemId != null">
+                item_id,
+            </if>
+            <if test="referenceId != null">
+                reference_id,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                #{reportId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                #{itemId,jdbcType=VARCHAR},
+            </if>
+            <if test="referenceId != null">
+                #{referenceId,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Reportresult">
+        update reportresult
+        <set>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where report_id = #{reportId,jdbcType=VARCHAR}
+        and item_id = #{itemId,jdbcType=VARCHAR}
+        and reference_id = #{referenceId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Reportresult">
+    update reportresult
+    set patient_id = #{patientId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+      and reference_id = #{referenceId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectAllByPid" parameterType="String" resultType="com.pei.test.server.entity.testResultEntity">
+  SELECT
+    reportresult.report_id,
+    reportresult.patient_id,
+    reportresult.`name` AS reportname,
+    reportresult.result,
+    patient.`name`,
+    ward.ward_no,
+    ward.bed_no
+  FROM
+    reportresult ,
+    patient ,
+    ward
+  WHERE
+    reportresult.patient_id = patient.patient_id AND
+    reportresult.patient_id = ward.patient_id AND
+    reportresult.patient_id = #{Pid,jdbcType=VARCHAR}
+    </select>
+</mapper>

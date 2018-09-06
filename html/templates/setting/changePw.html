@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <script src="../../static/tool/jquery.serializejson.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#" v-on:tap="gotoUrl('Back')"></a>
+        <h1 class="mui-title">修改密码</h1>
+    </header>
+
+    <div class="mui-content">
+        <form class="mui-input-group" style="margin-top: 10px;" id="formDemo">
+            <div class="mui-input-row">
+                <label>用户名：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入用户名" name="username" id="username"
+                       readonly="readonly">
+            </div>
+            <div class="mui-input-row">
+                <label>旧密码：</label>
+                <input type="password" class="mui-input-password" placeholder="请输入密码" name="oldpassword"
+                       id="oldpassword">
+            </div>
+            <div class="mui-input-row">
+                <label>新密码：</label>
+                <input type="password" class="mui-input-password" placeholder="请输入密码" name="newpassword"
+                       id="newpassword">
+            </div>
+            <div class="mui-button-row">
+                <button id="submitBtn" type="button" class="mui-btn mui-btn-primary" @tap="check()">确认</button>
+                <button type="cancelBtn" class="mui-btn mui-btn-danger" @tap="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        var nid = getQueryString("nid");
+        document.getElementById("username").value = nid;
+    }
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        methods: {
+            gotoUrl: function (next) {
+                $.ajax({
+                    type: 'GET',
+                    data: {
+                        nid: getQueryString("nid")
+                    },
+                    url: getUrl() + "/changePw" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            check: function () {
+                var flug = false;
+                $.each($(".mui-input-row").find("input"), function (i, item) {
+                    if (item.value == "") {
+                        flug = true;
+                    }
+                })
+                if (flug) {
+
+                    mui.alert('请将用户名或密码填写完整', '警告');
+
+                } else {
+
+
+                    var d = {}
+                    d.username = $("#username").val();
+                    d.oldpassword = $("#oldpassword").val();
+                    d.newpassword = $("#newpassword").val();
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify(d),
+                        url: getUrl() + "/changePw",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == "200")
+                                mui.alert('数据已提交', '提示');
+                        }
+                    });
+                }
+            },
+            cancel: function () {
+                document.getElementById("username").value = "";
+                document.getElementById("oldpassword").value = "";
+                document.getElementById("newpassword").value = "";
+            }
+        }
+    });
+</script>
+</body>
+</html>

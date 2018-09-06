@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.ReportMapper">
+  <resultMap id="BaseResultMap" type="com.pei.test.entity.Report">
+    <id column="report_id" jdbcType="VARCHAR" property="reportId" />
+    <id column="item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="charge_status" jdbcType="VARCHAR" property="chargeStatus" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    report_id, item_id, name, price, charge_status, patient_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.pei.test.entity.ReportKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from report
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pei.test.entity.ReportKey">
+    delete from report
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pei.test.entity.Report">
+    insert into report (report_id, item_id, name, 
+      price, charge_status, patient_id
+      )
+    values (#{reportId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{chargeStatus,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pei.test.entity.Report">
+    insert into report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reportId != null">
+        report_id,
+      </if>
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="chargeStatus != null">
+        charge_status,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reportId != null">
+        #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="chargeStatus != null">
+        #{chargeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Report">
+    update report
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="chargeStatus != null">
+        charge_status = #{chargeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Report">
+    update report
+    set name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      charge_status = #{chargeStatus,jdbcType=VARCHAR},
+      patient_id = #{patientId,jdbcType=VARCHAR}
+    where report_id = #{reportId,jdbcType=VARCHAR}
+      and item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAllByPid" parameterType="String" resultType="com.pei.test.server.entity.testEntity">
+    SELECT
+      report.report_id,
+      report.`name` AS reportname,
+      report.price,
+      report.patient_id,
+      patient.`name`,
+      ward.ward_no,
+      ward.bed_no
+    FROM
+      report ,
+      patient ,
+      ward
+    WHERE
+      report.patient_id = patient.patient_id AND
+      report.patient_id = ward.patient_id AND
+      report.patient_id = #{Pid,jdbcType=VARCHAR}
+  </select>
+</mapper>

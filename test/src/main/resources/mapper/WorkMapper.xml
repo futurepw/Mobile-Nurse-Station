@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.WorkMapper">
+    <resultMap id="BaseResultMap" type="com.pei.test.entity.Work">
+        <id column="work_id" jdbcType="VARCHAR" property="workId"/>
+        <result column="patient_id" jdbcType="VARCHAR" property="patientId"/>
+        <result column="department_id" jdbcType="VARCHAR" property="departmentId"/>
+        <result column="ward_no" jdbcType="VARCHAR" property="wardNo"/>
+        <result column="bed_no" jdbcType="VARCHAR" property="bedNo"/>
+        <result column="order_sn" jdbcType="VARCHAR" property="orderSn"/>
+        <result column="infusion_id" jdbcType="VARCHAR" property="infusionId"/>
+        <result column="care_id" jdbcType="VARCHAR" property="careId"/>
+        <result column="check_order" jdbcType="VARCHAR" property="checkOrder"/>
+        <result column="check_infusion" jdbcType="VARCHAR" property="checkInfusion"/>
+        <result column="check_care" jdbcType="VARCHAR" property="checkCare"/>
+        <result column="check_signs" jdbcType="VARCHAR" property="checkSigns"/>
+        <result column="time" jdbcType="DATE" property="time"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    work_id, patient_id, department_id, ward_no, bed_no, order_sn, infusion_id, care_id, 
+    check_order, check_infusion, check_care, check_signs, time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from work
+        where work_id = #{workId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from work
+    where work_id = #{workId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.pei.test.entity.Work">
+    insert into work (work_id, patient_id, department_id, 
+      ward_no, bed_no, order_sn, 
+      infusion_id, care_id, check_order, 
+      check_infusion, check_care, check_signs, 
+      time)
+    values (#{workId,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, 
+      #{wardNo,jdbcType=VARCHAR}, #{bedNo,jdbcType=VARCHAR}, #{orderSn,jdbcType=VARCHAR}, 
+      #{infusionId,jdbcType=VARCHAR}, #{careId,jdbcType=VARCHAR}, #{checkOrder,jdbcType=VARCHAR}, 
+      #{checkInfusion,jdbcType=VARCHAR}, #{checkCare,jdbcType=VARCHAR}, #{checkSigns,jdbcType=VARCHAR}, 
+      #{time,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pei.test.entity.Work">
+        insert into work
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="workId != null">
+                work_id,
+            </if>
+            <if test="patientId != null">
+                patient_id,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="wardNo != null">
+                ward_no,
+            </if>
+            <if test="bedNo != null">
+                bed_no,
+            </if>
+            <if test="orderSn != null">
+                order_sn,
+            </if>
+            <if test="infusionId != null">
+                infusion_id,
+            </if>
+            <if test="careId != null">
+                care_id,
+            </if>
+            <if test="checkOrder != null">
+                check_order,
+            </if>
+            <if test="checkInfusion != null">
+                check_infusion,
+            </if>
+            <if test="checkCare != null">
+                check_care,
+            </if>
+            <if test="checkSigns != null">
+                check_signs,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="workId != null">
+                #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="patientId != null">
+                #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="wardNo != null">
+                #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="bedNo != null">
+                #{bedNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSn != null">
+                #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="infusionId != null">
+                #{infusionId,jdbcType=VARCHAR},
+            </if>
+            <if test="careId != null">
+                #{careId,jdbcType=VARCHAR},
+            </if>
+            <if test="checkOrder != null">
+                #{checkOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="checkInfusion != null">
+                #{checkInfusion,jdbcType=VARCHAR},
+            </if>
+            <if test="checkCare != null">
+                #{checkCare,jdbcType=VARCHAR},
+            </if>
+            <if test="checkSigns != null">
+                #{checkSigns,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Work">
+        update work
+        <set>
+            <if test="patientId != null">
+                patient_id = #{patientId,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=VARCHAR},
+            </if>
+            <if test="wardNo != null">
+                ward_no = #{wardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="bedNo != null">
+                bed_no = #{bedNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderSn != null">
+                order_sn = #{orderSn,jdbcType=VARCHAR},
+            </if>
+            <if test="infusionId != null">
+                infusion_id = #{infusionId,jdbcType=VARCHAR},
+            </if>
+            <if test="careId != null">
+                care_id = #{careId,jdbcType=VARCHAR},
+            </if>
+            <if test="checkOrder != null">
+                check_order = #{checkOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="checkInfusion != null">
+                check_infusion = #{checkInfusion,jdbcType=VARCHAR},
+            </if>
+            <if test="checkCare != null">
+                check_care = #{checkCare,jdbcType=VARCHAR},
+            </if>
+            <if test="checkSigns != null">
+                check_signs = #{checkSigns,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=DATE},
+            </if>
+        </set>
+        where work_id = #{workId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Work">
+    update work
+    set patient_id = #{patientId,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      ward_no = #{wardNo,jdbcType=VARCHAR},
+      bed_no = #{bedNo,jdbcType=VARCHAR},
+      order_sn = #{orderSn,jdbcType=VARCHAR},
+      infusion_id = #{infusionId,jdbcType=VARCHAR},
+      care_id = #{careId,jdbcType=VARCHAR},
+      check_order = #{checkOrder,jdbcType=VARCHAR},
+      check_infusion = #{checkInfusion,jdbcType=VARCHAR},
+      check_care = #{checkCare,jdbcType=VARCHAR},
+      check_signs = #{checkSigns,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE}
+    where work_id = #{workId,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateCareCheck" parameterType="com.pei.test.tool.check">
+      UPDATE work
+      <set>
+          check_care = "已执行"
+      </set>
+      WHERE care_id = #{id,jdbcType=VARCHAR} AND patient_id =  #{pid,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateInfusionCheck" parameterType="com.pei.test.tool.check">
+        UPDATE work
+        <set>
+            check_infusion = "已执行"
+        </set>
+        WHERE infusion_id = #{id,jdbcType=VARCHAR} AND patient_id =  #{pid,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateOrderCheck" parameterType="com.pei.test.tool.check">
+        UPDATE work
+        <set>
+             check_order = "已执行"
+        </set>
+        WHERE order_sn = #{id,jdbcType=VARCHAR} AND patient_id =  #{pid,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

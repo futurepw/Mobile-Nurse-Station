@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#" v-on:tap="gotoUrl('Back')"></a>
+        <h1 class="mui-title">医嘱执行</h1>
+    </header>
+
+    <div class="mui-content">
+        <div class="mui-card">
+            <ul class="mui-table-view" id="orders">
+                <li class="mui-table-view-cell mui-collapse" v-for="order in data.data">
+                    <a class="mui-navigate-right" href="#" id="order_id">医嘱号：{{order.order_sn}}</a>
+                    <div class="mui-collapse-content">
+                        <form class="mui-input-group">
+                            <div class="mui-input-row">
+                                <label>医嘱编码：</label>
+                                <label>{{order.order_code}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>包装序号：</label>
+                                <label>{{order.pack_sn}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>病人ID：</label>
+                                <label id="patient_id">{{order.patient_id}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>病人姓名：</label>
+                                <label>{{order.name}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>病房号：</label>
+                                <label>{{order.ward_no}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>床位号：</label>
+                                <label>{{order.bed_no}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>执行频率：</label>
+                                <label>{{order.frequ_code}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>给药方式：</label>
+                                <label>{{order.supply_code}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>医嘱规格：</label>
+                                <label>{{order.drug_specification}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>每次剂量：</label>
+                                <label>{{order.dosage}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>剂量单位：</label>
+                                <label>{{order.dosage_unit}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>开始时间：</label>
+                                <label>{{order.start_time}}</label>
+                            </div>
+                            <div class="mui-input-row">
+                                <label>终止时间：</label>
+                                <label>{{order.end_time}}</label>
+                            </div>
+
+                            <div class="mui-button-row">
+                                <button class="mui-btn mui-btn-primary" id="submitBtn" type="button" v-on:click="check()">确认执行
+                                </button>&nbsp;&nbsp;
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        created: function () {
+            this.pullData();
+        },
+        methods: {
+            pullData: function () {
+                var _self = this;
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    url: getUrl() + "/order",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        _self.data = data;
+                    }
+                });
+            },
+            gotoUrl: function (next) {
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    contentType: "application/json;charset=utf-8",
+                    url: getUrl() + "/order" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            check: function () {
+                var d = {}
+                d.id = $("#order_id")[0].text.substring(4);
+                d.pid = $("#patient_id").html();
+                console.log(d);
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(d),
+                    url: getUrl() + "/workOrderCheck",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data==200)
+                        mui.alert('医嘱已执行', '提示');
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

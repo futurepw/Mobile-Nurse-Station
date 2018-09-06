@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts 示例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <style>
+        .chart {
+            height: 200px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h5 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        h5:first-child {
+            margin-top: 15px;
+        }
+
+    </style>
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+
+</head>
+
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="#" v-on:tap="gotoUrl('Back')"></a>
+        <h1 class="mui-title">可视化</h1>
+    </header>
+    <div class="mui-content">
+        <br/>
+        <div class="mui-content-padded">
+            <div><h4>ID：{{data.data.patient_id}}</h4></div>
+            <div><h4>姓名：{{data.data.name}}</h4></div>
+            <div><h4>病房号：{{data.data.ward_no}} 病床号:{{data.data.bed_no}}</h4></div>
+
+            <br/>
+            <div class="chart" id="pulse"></div>
+            <br/>
+            <div class="chart" id="temperature"></div>
+            <br/>
+            <div class="chart" id="press"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../static/tool/echarts-all.js"></script>
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: {
+                data: {
+                    patient_id: "",
+                    name: "",
+                    ward_no: "",
+                    bed_no: "",
+                    temperature: [],
+                    blood_pressureH: [],
+                    blood_pressureL: [],
+                    pulse: [],
+                    date: []
+                }
+            }
+        },
+        created: function () {
+            this.pullData();
+        },
+        updated:function () {
+            this.writecharts('pulse');
+            this.writecharts('temperature');
+            this.writecharts('press');
+        },
+        methods: {
+            pullData: function () {
+                var _self = this;
+                $.ajax({
+                    type: 'GET',
+                    data:{
+                        id:getQueryString("id")
+                    },
+                    url: getUrl() + "/chart",
+                    dataType: 'json',
+                    success: function (data) {
+                        _self.data = data;
+                    }
+                });
+            },
+            gotoUrl: function (next) {
+                var d = {};
+                d.id = getQueryString("id");
+                d.nid=getQueryString("nid");
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(d),
+                    url: getUrl() + "/chart" + next,
+                    contentType: "application/json;charset=utf-8",
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            writecharts: function (id) {
+                var charts = echarts.init(document.getElementById(id));
+                if (id == "temperature")
+                    charts.setOption(this.getTemperatureOption());
+                else if (id == "press")
+                    charts.setOption(this.getPressOption());
+                else if (id == "pulse")
+                    charts.setOption(this.getPulseOption())
+            },
+            getTemperatureOption: function () {
+                var _self = this;
+                var chartOption = {
+                    title: {
+                        text: '近期体温变化',
+                    },
+                    legend: {
+                        data: ['体温']
+                    },
+                    grid: {
+                        x: 35,
+                        y: 30,
+                        x2: 10,
+                        y2: 25,
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataView: {show: false, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: false}
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: _self.data.data.date
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        splitArea: {
+                            show: true
+                        }
+                    }],
+                    series: [{
+                        name: '体温',
+                        type: 'line',
+                        data: _self.data.data.temperature
+                    }]
+                };
+                return chartOption;
+            },
+            getPressOption: function () {
+                var _self = this;
+                var chartOption = {
+                    title: {
+                        text: '近期血压变化',
+                    },
+                    legend: {
+                        data: ['血压低压', '血压高压']
+                    },
+                    grid: {
+                        x2: 10,
+                        y2: 25,
+                        x: 35,
+                        y: 30,
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataView: {show: false, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: false}
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: _self.data.data.date
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        splitArea: {
+                            show: true
+                        }
+                    }],
+                    series: [{
+                        name: '血压低压',
+                        type: 'line',
+                        data: _self.data.data.blood_pressureL
+                    }, {
+                        name: '血压高压',
+                        type: 'line',
+                        data: _self.data.data.blood_pressureH
+                    }]
+                };
+                return chartOption;
+            },
+            getPulseOption: function () {
+                var _self = this;
+                var chartOption = {
+                    title: {
+                        text: '近期脉搏变化',
+                    },
+                    legend: {
+                        data: ['脉搏']
+                    },
+                    grid: {
+                        x: 35,
+                        y: 30,
+                        x2: 10,
+                        y2: 25,
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataView: {show: false, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: false}
+                        }
+                    },
+                    calculable: false,
+                    xAxis: [{
+                        type: 'category',
+                        data: _self.data.data.date
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        splitArea: {
+                            show: true
+                        }
+                    }],
+                    series: [{
+                        name: '脉搏',
+                        type: 'line',
+                        data: _self.data.data.pulse
+                    }]
+                };
+                return chartOption;
+            },
+        }
+    });
+
+
+</script>
+</body>
+</html>

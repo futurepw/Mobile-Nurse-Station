@@ -1,0 +1,76 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "patient_id": "id1",
+      "name": "病人姓名1",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id2",
+      "name": "病人姓名2",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id3",
+      "name": "病人姓名3",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id4",
+      "name": "病人姓名4",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id5",
+      "name": "病人姓名5",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id6",
+      "name": "病人姓名6",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id7",
+      "name": "病人姓名7",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id8",
+      "name": "病人姓名8",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id9",
+      "name": "病人姓名9",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "patient_id": "id10",
+      "name": "病人姓名10",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    }
+  ]
+}

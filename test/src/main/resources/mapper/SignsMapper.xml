@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.SignsMapper">
+  <resultMap id="BaseResultMap" type="com.pei.test.entity.Signs">
+    <id column="signs_no" jdbcType="VARCHAR" property="signsNo" />
+    <id column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="temperature" jdbcType="DOUBLE" property="temperature" />
+    <result column="breathe" jdbcType="DOUBLE" property="breathe" />
+    <result column="blood_pressureL" jdbcType="DOUBLE" property="bloodPressurel" />
+    <result column="blood_pressureH" jdbcType="DOUBLE" property="bloodPressureh" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="pulse" jdbcType="INTEGER" property="pulse" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    signs_no, patient_id, temperature, breathe, blood_pressureL, blood_pressureH, date, 
+    pulse, height, weight
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.pei.test.entity.SignsKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from signs
+    where signs_no = #{signsNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pei.test.entity.SignsKey">
+    delete from signs
+    where signs_no = #{signsNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pei.test.entity.Signs">
+    insert into signs (signs_no, patient_id, temperature, 
+      breathe, blood_pressureL, blood_pressureH, 
+      date, pulse, height, 
+      weight)
+    values (#{signsNo,jdbcType=VARCHAR}, #{patientId,jdbcType=VARCHAR}, #{temperature,jdbcType=DOUBLE}, 
+      #{breathe,jdbcType=DOUBLE}, #{bloodPressurel,jdbcType=DOUBLE}, #{bloodPressureh,jdbcType=DOUBLE}, 
+      #{date,jdbcType=TIMESTAMP}, #{pulse,jdbcType=INTEGER}, #{height,jdbcType=DOUBLE}, 
+      #{weight,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pei.test.entity.Signs">
+    insert into signs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signsNo != null">
+        signs_no,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="temperature != null">
+        temperature,
+      </if>
+      <if test="breathe != null">
+        breathe,
+      </if>
+      <if test="bloodPressurel != null">
+        blood_pressureL,
+      </if>
+      <if test="bloodPressureh != null">
+        blood_pressureH,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="pulse != null">
+        pulse,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signsNo != null">
+        #{signsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null">
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="breathe != null">
+        #{breathe,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodPressurel != null">
+        #{bloodPressurel,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodPressureh != null">
+        #{bloodPressureh,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pulse != null">
+        #{pulse,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Signs">
+    update signs
+    <set>
+      <if test="temperature != null">
+        temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="breathe != null">
+        breathe = #{breathe,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodPressurel != null">
+        blood_pressureL = #{bloodPressurel,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodPressureh != null">
+        blood_pressureH = #{bloodPressureh,jdbcType=DOUBLE},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pulse != null">
+        pulse = #{pulse,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where signs_no = #{signsNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Signs">
+    update signs
+    set temperature = #{temperature,jdbcType=DOUBLE},
+      breathe = #{breathe,jdbcType=DOUBLE},
+      blood_pressureL = #{bloodPressurel,jdbcType=DOUBLE},
+      blood_pressureH = #{bloodPressureh,jdbcType=DOUBLE},
+      date = #{date,jdbcType=TIMESTAMP},
+      pulse = #{pulse,jdbcType=INTEGER},
+      height = #{height,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=DOUBLE}
+    where signs_no = #{signsNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPid" resultType="com.pei.test.server.entity.chartEntity" parameterType="String">
+      SELECT
+signs.patient_id,
+signs.temperature,
+signs.pulse,
+signs.blood_pressureL,
+signs.blood_pressureH,
+ward.ward_no,
+ward.bed_no,
+patient.`name`,
+signs.date
+FROM
+signs ,
+ward ,
+patient
+WHERE
+signs.patient_id = patient.patient_id AND
+ward.patient_id = patient.patient_id AND
+patient.patient_id = #{pid,jdbcType=VARCHAR}
+ORDER BY
+signs.date DESC
+LIMIT 7
+    </select>
+</mapper>

@@ -1,0 +1,24 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "report_id": "检验表id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "reportname": "检验名称",
+      "price": "价格"
+    },
+    {
+      "report_id": "检验表id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "reportname": "检验名称",
+      "price": "价格"
+    }
+  ]
+}

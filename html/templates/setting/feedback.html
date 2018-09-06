@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <script src="../../static/tool/jquery.serializejson.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" href="#"  v-on:tap="gotoUrl('Back')"></a>
+        <h1 class="mui-title">反馈</h1>
+    </header>
+    <div class="mui-content">
+        <form id="formDemo">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <p>问题和意见</p>
+                    <div class="mui-input-row">
+                    <textarea id="question" name="question" class="mui-input-clear question"
+                              placeholder="请详细描述你的问题和意见..." style="height: 150px"></textarea>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <p>QQ/邮箱</p>
+                    <div class="mui-input-row">
+                    <textarea id="email" name="email" type="text" class="mui-input-clear  contact"
+                              placeholder="(选填,方便我们联系你 )" style="height: 40px"></textarea>
+                    </div>
+                    <div class="mui-button-row">
+                        <button type="button" class="mui-btn mui-btn-primary" onclick="check()">确认</button>
+                        <button type="button" class="mui-btn mui-btn-danger" onclick="cancal()">取消</button>
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<script>
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: '',
+        },
+        methods: {
+            gotoUrl: function (next) {
+                $.ajax({
+                    type: 'GET',
+                    data:{
+                        nid:getQueryString("nid")
+                    },
+                    url: getUrl() + "/feedback" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            }
+        }
+    });
+</script>
+<script>
+    function check() {
+        console.log(JSON.stringify($('#formDemo').serializeJSON()));
+    }
+    function cancal() {
+        document.getElementById("question").value = "";
+        document.getElementById("email").value = "";
+    }
+</script>
+</body>
+</html>

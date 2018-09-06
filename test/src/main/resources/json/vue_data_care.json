@@ -1,0 +1,26 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "care_id": "护理id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "time": "护理时间",
+      "way": "方式",
+      "remark": "备注"
+    },
+    {
+      "care_id": "护理id",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "time": "护理时间",
+      "way": "方式",
+      "remark": "备注"
+    }
+  ]
+}

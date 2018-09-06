@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pei.test.dao.WardMapper">
+  <resultMap id="BaseResultMap" type="com.pei.test.entity.Ward">
+    <id column="ward_no" jdbcType="VARCHAR" property="wardNo" />
+    <id column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <id column="bed_no" jdbcType="VARCHAR" property="bedNo" />
+    <id column="patient_id" jdbcType="VARCHAR" property="patientId" />
+    <result column="doctors_id" jdbcType="VARCHAR" property="doctorsId" />
+    <result column="nurse_id" jdbcType="VARCHAR" property="nurseId" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="lend_flag" jdbcType="VARCHAR" property="lendFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ward_no, department_id, bed_no, patient_id, doctors_id, nurse_id, type, comment, 
+    lend_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.pei.test.entity.WardKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ward
+    where ward_no = #{wardNo,jdbcType=VARCHAR}
+      and department_id = #{departmentId,jdbcType=VARCHAR}
+      and bed_no = #{bedNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pei.test.entity.WardKey">
+    delete from ward
+    where ward_no = #{wardNo,jdbcType=VARCHAR}
+      and department_id = #{departmentId,jdbcType=VARCHAR}
+      and bed_no = #{bedNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pei.test.entity.Ward">
+    insert into ward (ward_no, department_id, bed_no, 
+      patient_id, doctors_id, nurse_id, 
+      type, comment, lend_flag
+      )
+    values (#{wardNo,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{bedNo,jdbcType=VARCHAR}, 
+      #{patientId,jdbcType=VARCHAR}, #{doctorsId,jdbcType=VARCHAR}, #{nurseId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{lendFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pei.test.entity.Ward">
+    insert into ward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wardNo != null">
+        ward_no,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="bedNo != null">
+        bed_no,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="doctorsId != null">
+        doctors_id,
+      </if>
+      <if test="nurseId != null">
+        nurse_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="lendFlag != null">
+        lend_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wardNo != null">
+        #{wardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="bedNo != null">
+        #{bedNo,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorsId != null">
+        #{doctorsId,jdbcType=VARCHAR},
+      </if>
+      <if test="nurseId != null">
+        #{nurseId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="lendFlag != null">
+        #{lendFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pei.test.entity.Ward">
+    update ward
+    <set>
+      <if test="doctorsId != null">
+        doctors_id = #{doctorsId,jdbcType=VARCHAR},
+      </if>
+      <if test="nurseId != null">
+        nurse_id = #{nurseId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="lendFlag != null">
+        lend_flag = #{lendFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ward_no = #{wardNo,jdbcType=VARCHAR}
+      and department_id = #{departmentId,jdbcType=VARCHAR}
+      and bed_no = #{bedNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pei.test.entity.Ward">
+    update ward
+    set doctors_id = #{doctorsId,jdbcType=VARCHAR},
+      nurse_id = #{nurseId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      lend_flag = #{lendFlag,jdbcType=VARCHAR}
+    where ward_no = #{wardNo,jdbcType=VARCHAR}
+      and department_id = #{departmentId,jdbcType=VARCHAR}
+      and bed_no = #{bedNo,jdbcType=VARCHAR}
+      and patient_id = #{patientId,jdbcType=VARCHAR}
+  </update>
+  <select id="SelectByPid" resultMap="BaseResultMap" parameterType="String">
+      select * from ward
+      where
+      patient_id=#{pid,jdbcType=VARCHAR}
+  </select>
+</mapper>

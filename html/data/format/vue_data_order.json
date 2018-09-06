@@ -1,0 +1,38 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "order_sn": "医嘱id",
+      "order_code": "医嘱编码",
+      "pack_sn": "包装序号",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "frequ_code": "执行频率",
+      "supply_code": "给药方式",
+      "drug_specification": "医嘱规格",
+      "dosage": "每次剂量",
+      "dosage_unit": "剂量单位",
+      "start_time": "医嘱开始时间",
+      "end_time": "医嘱停止时间"
+    },
+    {
+      "order_sn": "医嘱id",
+      "order_code": "医嘱编码",
+      "pack_sn": "包装序号",
+      "patient_id": "病人id",
+      "name": "病人姓名",
+      "ward_no": "病房号",
+      "bed_no": "病床号",
+      "frequ_code": "执行频率",
+      "supply_code": "给药方式",
+      "drug_specification": "医嘱规格",
+      "dosage": "每次剂量",
+      "dosage_unit": "剂量单位",
+      "start_time": "医嘱开始时间",
+      "end_time": "医嘱停止时间"
+    }
+  ]
+}

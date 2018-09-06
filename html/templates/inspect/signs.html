@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../static/mui/css/mui.min.css">
+    <link rel="stylesheet" href="../../static/mui/css/app.css">
+    <script src="../../static/mui/js/tools.js"></script>
+
+    <script src="../../static/tool/jquery-3.3.1.js"></script>
+    <script src="../../static/vue/vue.js"></script>
+    <script src="../../static/tool/tool.js"></script>
+    <script src="../../static/mui/js/mui.min.js"></script>
+    <title></title>
+
+
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav white">
+        <a class="mui-icon mui-icon-left-nav" v-on:tap="gotoUrl('Back')" href="#"></a>
+        <h1 class="mui-title">体征录入</h1>
+    </header>
+    <div class="mui-content">
+        <div class="hint" style=" text-align: center; color: #bd2130;min-height: 21px"></div>
+        <form class="mui-input-group" id="formDemo">
+            <div class="mui-input-row">
+                <label>病人ID：</label>
+                <input type="text" class="mui-input-clear" readonly="readonly" name="patient_id" id="patient_id">
+            </div>
+            <div class="mui-input-row">
+                <label>体温：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人体温" name="temperature" id="temperature">
+            </div>
+            <div class="mui-input-row">
+                <label>呼吸量：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人呼吸量" name="breathe" id="breathe">
+            </div>
+            <div class="mui-input-row">
+                <label>血压高压：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人血压高压" name="blood_pressureH"
+                       id="blood_pressureH">
+            </div>
+            <div class="mui-input-row">
+                <label>血压低压：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人血压低压" name="blood_pressureL"
+                       id="blood_pressureL">
+            </div>
+            <div class="mui-input-row">
+                <label>脉搏：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人脉搏次数" name="pulse" id="pulse">
+            </div>
+            <div class="mui-input-row">
+                <label>身高：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人身高" name="height" id="height">
+            </div>
+            <div class="mui-input-row">
+                <label>体重：</label>
+                <input type="text" class="mui-input-clear" placeholder="请输入病人体重" name="weight" id="weight">
+            </div>
+            <div class="mui-button-row">
+                <button id="submitBtn" type="button" class="mui-btn mui-btn-primary" @tap="check()">确认</button>
+                <button id="cancelBtn" type="button" class="mui-btn mui-btn-danger" @tap="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    mui.init();
+
+    var v = new Vue({
+        el: '#app',
+        data: {
+            data: ''
+        },
+        methods: {
+            cancel: function () {
+                mui.toast('取消提交');
+                document.getElementById("temperature").value = "";
+                document.getElementById("breathe").value = "";
+                document.getElementById("blood_pressureH").value = "";
+                document.getElementById("blood_pressureL").value = "";
+                document.getElementById("pulse").value = "";
+                document.getElementById("height").value = "";
+                document.getElementById("weight").value = "";
+            },
+            gotoUrl: function (next) {
+                $.ajax({
+                    type: 'GET',
+                    data: {
+                        nid: getQueryString("nid")
+                    },
+                    url: getUrl() + "/signs" + next,
+                    dataType: 'json',
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            },
+            checkNum: function () {
+                var temperature = $("#temperature").val()
+                var breath = $("#breathe").val()
+                var blood_pressureH = $("#blood_pressureH").val()
+                var blood_pressureL = $("#blood_pressureL").val()
+                var pulse = $("#pulse").val()
+                var height = $("#height").val()
+                var weight = $("#weight").val()
+                if (isNumber(temperature) && isNumber(breath) && isNumber(blood_pressureH) && isNumber(blood_pressureL) && isNumber(pulse) && isNumber(height) && isNumber(weight))
+                    return true;
+                else
+                    return false;
+            },
+            check: function () {
+                var flug = false;
+                $.each($(".mui-input-row").find("input"), function (i, item) {
+                    if (item.value == "") {
+                        flug = true;
+                    }
+                })
+                if (flug) {
+                    mui.alert('请将数据填写完整', '警告');
+                } else {
+                    if (this.checkNum()){
+                        var d = {}
+                        d.patient_id = $("#patient_id").val();
+                        d.temperature = $("#temperature").val();
+                        d.breathe = $("#breathe").val();
+                        d.blood_pressureH = $("#blood_pressureH").val();
+                        d.blood_pressureL = $("#blood_pressureL").val();
+                        d.pulse = $("#pulse").val();
+                        d.height = $("#height").val();
+                        d.weight = $("#weight").val();
+                        $.ajax({
+                            type: 'POST',
+                            data: JSON.stringify(d),
+                            url: getUrl() + "/signs",
+                            contentType: "application/json;charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data == "200")
+                                    mui.alert('数据已提交', '提示');
+                            }
+                        });
+                    }else {
+                        mui.alert('请填写正确数据', '警告');
+                    }
+                }
+            },
+            setData: function () {
+                var nid = getQueryString("nid");
+                var id = getQueryString("id");
+                document.getElementById("patient_id").value = id;
+            }
+        }
+    });
+    function hide() {
+        $(".hint")[0].innerHTML = "";
+    }
+    function show() {
+        $(".hint")[0].style.display = "block";
+        $(".hint")[0].innerHTML = "";
+    }
+    window.onload = function () {
+        v.setData();
+        $("#temperature")[0].onfocus = function () {
+            show();
+            $(".hint")[0].append("单位为摄氏度(℃)")
+        }
+        $("#temperature")[0].onblur = function () {
+            hide()
+        }
+        $("#blood_pressureH")[0].onfocus = function () {
+            show();
+            $(".hint")[0].append("单位为毫米汞柱(mmHg)")
+        }
+        $("#blood_pressureH")[0].onblur = function () {
+            hide();
+        }
+        $("#blood_pressureL")[0].onfocus = function () {
+            show();
+            $(".hint")[0].append("单位为毫米汞柱(mmHg)")
+        }
+        $("#blood_pressureL")[0].onblur = function () {
+            hide();
+        }
+        $("#height")[0].onfocus = function () {
+            show();
+            $(".hint")[0].append("单位为厘米(cm)")
+        }
+        $("#height")[0].onblur = function () {
+            hide();
+        }
+        $("#weight")[0].onfocus = function () {
+            show();
+            $(".hint")[0].append("单位为千克(Kg)")
+        }
+        $("#weight")[0].onblur = function () {
+            hide();
+        }
+    }
+</script>
+</body>
+</html>

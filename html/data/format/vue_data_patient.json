@@ -1,0 +1,18 @@
+{
+  "code": 0,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "name": "病人姓名",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    },
+    {
+      "name": "病人姓名",
+      "docter": "负责医生",
+      "ward_no": "病房号",
+      "bed_no": "病床号"
+    }
+  ]
+}
